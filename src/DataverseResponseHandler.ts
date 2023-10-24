@@ -6,11 +6,11 @@
  */
 
 /**
- * @module GraphResponseHandler
+ * @module DataverseResponseHandler
  * References - https://fetch.spec.whatwg.org/#responses
  */
 
-import { GraphRequestCallback } from "./IGraphRequestCallback";
+import { DataverseRequestCallback } from "./IDataverseRequestCallback";
 import { ResponseType } from "./ResponseType";
 
 /**
@@ -53,10 +53,10 @@ enum ContentTypeRegexStr {
 
 /**
  * @class
- * Class for GraphResponseHandler
+ * Class for DataverseResponseHandler
  */
 
-export class GraphResponseHandler {
+export class DataverseResponseHandler {
 	/**
 	 * @private
 	 * @static
@@ -107,7 +107,7 @@ export class GraphResponseHandler {
 				responseValue = await rawResponse.blob();
 				break;
 			case ResponseType.DOCUMENT:
-				responseValue = await GraphResponseHandler.parseDocumentResponse(rawResponse, DocumentType.TEXT_XML);
+				responseValue = await DataverseResponseHandler.parseDocumentResponse(rawResponse, DocumentType.TEXT_XML);
 				break;
 			case ResponseType.JSON:
 				responseValue = await rawResponse.json();
@@ -122,7 +122,7 @@ export class GraphResponseHandler {
 				if (contentType !== null) {
 					const mimeType = contentType.split(";")[0];
 					if (new RegExp(ContentTypeRegexStr.DOCUMENT).test(mimeType)) {
-						responseValue = await GraphResponseHandler.parseDocumentResponse(rawResponse, mimeType as DocumentType);
+						responseValue = await DataverseResponseHandler.parseDocumentResponse(rawResponse, mimeType as DocumentType);
 					} else if (new RegExp(ContentTypeRegexStr.IMAGE).test(mimeType)) {
 						responseValue = rawResponse.blob();
 					} else if (mimeType === ContentType.TEXT_PLAIN) {
@@ -158,14 +158,14 @@ export class GraphResponseHandler {
 	 * To get the parsed response
 	 * @param {Response} rawResponse - The response object
 	 * @param {ResponseType} [responseType] - The response type value
-	 * @param {GraphRequestCallback} [callback] - The graph request callback function
+	 * @param {DataverseRequestCallback} [callback] - The dataverse request callback function
 	 * @returns The parsed response
 	 */
-	public static async getResponse(rawResponse: Response, responseType?: ResponseType, callback?: GraphRequestCallback): Promise<any> {
+	public static async getResponse(rawResponse: Response, responseType?: ResponseType, callback?: DataverseRequestCallback): Promise<any> {
 		if (responseType === ResponseType.RAW) {
 			return Promise.resolve(rawResponse);
 		} else {
-			const response = await GraphResponseHandler.convertResponse(rawResponse, responseType);
+			const response = await DataverseResponseHandler.convertResponse(rawResponse, responseType);
 			if (rawResponse.ok) {
 				// Status Code 2XX
 				if (typeof callback === "function") {

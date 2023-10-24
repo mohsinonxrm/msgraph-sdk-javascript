@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-const { Client } = require("@microsoft/microsoft-graph-client");
+const { Client } = require("@mohsinonxrm/microsoft-dataverse-client");
 require("isomorphic-fetch");
 
 const error = "error throw by the authentication handler";

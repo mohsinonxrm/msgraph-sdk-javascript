@@ -6,10 +6,10 @@
  */
 
 /**
- * @module GraphRequestUtil
+ * @module DataverseRequestUtil
  */
-import { GRAPH_URLS } from "./Constants";
-import { GraphClientError } from "./GraphClientError";
+import { DATAVERSE_URLS } from "./Constants";
+import { DataverseClientError } from "./DataverseClientError";
 /**
  * To hold list of OData query params
  */
@@ -61,11 +61,11 @@ export const serializeContent = (content: any): any => {
 };
 
 /**
- * Checks if the url is one of the service root endpoints for Microsoft Graph and Graph Explorer.
+ * Checks if the url is one of the service root endpoints for Microsoft Dataverse and Dataverse Explorer.
  * @param {string} url - The url to be verified
- * @returns {boolean} - Returns true if the url is a Graph URL
+ * @returns {boolean} - Returns true if the url is a Dataverse URL
  */
-export const isGraphURL = (url: string): boolean => {
+export const isDataverseURL = (url: string): boolean => {
 	return isValidEndpoint(url);
 };
 
@@ -86,9 +86,9 @@ export const isCustomHost = (url: string, customHosts: Set<string>): boolean => 
  * @param {Set<string>} allowedHosts - A set of hosts.
  * @returns {boolean} - Returns true is for one of the provided endpoints.
  */
-const isValidEndpoint = (url: string, allowedHosts: Set<string> = GRAPH_URLS): boolean => {
-	// Valid Graph URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
-	// Valid Graph URL example - https://graph.microsoft.com/v1.0/
+const isValidEndpoint = (url: string, allowedHosts: Set<string> = DATAVERSE_URLS): boolean => {
+	// Valid Dataverse URL pattern - https://graph.microsoft.com/{version}/{resource}?{query-parameters}
+	// Valid Dataverse URL example - https://graph.microsoft.com/v1.0/
 	url = url.toLowerCase();
 
 	if (url.indexOf("https://") !== -1) {
@@ -118,6 +118,6 @@ const isValidEndpoint = (url: string, allowedHosts: Set<string> = GRAPH_URLS): b
  */
 const isCustomHostValid = (host: string) => {
 	if (host.indexOf("/") !== -1) {
-		throw new GraphClientError("Please add only hosts or hostnames to the CustomHosts config. If the url is `http://example.com:3000/`, host is `example:3000`");
+		throw new DataverseClientError("Please add only hosts or hostnames to the CustomHosts config. If the url is `http://example.com:3000/`, host is `example:3000`");
 	}
 };

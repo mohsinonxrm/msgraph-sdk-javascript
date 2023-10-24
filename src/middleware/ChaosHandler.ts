@@ -133,7 +133,7 @@ export class ChaosHandler implements Middleware {
 	}
 
 	/**
-	 * Decides whether to send the request to the graph or not
+	 * Decides whether to send the request to the dataverse or not
 	 * @private
 	 * @param {ChaosHandlerOptions} chaosHandlerOptions - A ChaosHandlerOptions object
 	 * @param {Context} context - Contains the context of the request

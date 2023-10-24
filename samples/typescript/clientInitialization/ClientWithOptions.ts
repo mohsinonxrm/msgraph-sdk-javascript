@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { Client } from "@microsoft/microsoft-graph-client";
+import { Client } from "@mohsinonxrm/microsoft-dataverse-client";
 
 const error = "error throw by the authentication handler";
 

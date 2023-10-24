@@ -1,10 +1,10 @@
 {
-    "name": "@microsoft/microsoft-graph-client",
-    "version": "3.0.7",
-    "description": "Microsoft Graph Client Library",
+    "name": "@mohsinonxrm/microsoft-dataverse-client",
+    "version": "1.0.0",
+    "description": "Microsoft Dataverse Client Library",
     "keywords": [
         "Microsoft",
-        "Graph",
+        "Dataverse",
         "SDK",
         "JavaScript",
         "Client"

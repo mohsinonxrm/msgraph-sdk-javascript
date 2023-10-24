@@ -7,13 +7,13 @@
 
 import { assert } from "chai";
 
-import { DocumentType, GraphResponseHandler } from "../../../src/GraphResponseHandler";
+import { DocumentType, DataverseResponseHandler } from "../../../src/DataverseResponseHandler";
 import { ResponseType } from "../../../src/ResponseType";
 
 /**
  * References - https://fetch.spec.whatwg.org/#responses
  */
-describe("GraphResponseHandler.ts", () => {
+describe("DataverseResponseHandler.ts", () => {
 	const htmlString = `<!DOCTYPE html>
                         <html lang="en">
                             <head>
@@ -33,14 +33,14 @@ describe("GraphResponseHandler.ts", () => {
 	describe("parseDocumentResponse", () => {
 		it("Should return the html string", async () => {
 			const response = new Response(htmlString, status200);
-			const dom = await GraphResponseHandler["parseDocumentResponse"](response, DocumentType.TEXT_HTML);
+			const dom = await DataverseResponseHandler["parseDocumentResponse"](response, DocumentType.TEXT_HTML);
 			assert.isDefined(dom);
 			assert.instanceOf(dom, Document);
 		});
 
 		it("Should return response value as text for text/html return type", async () => {
 			const response = new Response(htmlString, status200);
-			const responseValue = await GraphResponseHandler["convertResponse"](response, ResponseType.DOCUMENT);
+			const responseValue = await DataverseResponseHandler["convertResponse"](response, ResponseType.DOCUMENT);
 			assert.isDefined(responseValue);
 			assert.instanceOf(responseValue, Document);
 		});

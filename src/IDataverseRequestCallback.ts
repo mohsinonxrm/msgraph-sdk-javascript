@@ -5,10 +5,10 @@
  * -------------------------------------------------------------------------------------------
  */
 
-import { GraphError } from "./GraphError";
+import { DataverseError } from "./DataverseError";
 /**
  * @interface
- * Signature to define the GraphRequest callback
+ * Signature to define the DataverseRequest callback
  * @callback - The anonymous callback function
  */
-export type GraphRequestCallback = (error: GraphError, response: any, rawResponse?: any) => void;
+export type DataverseRequestCallback = (error: DataverseError, response: any, rawResponse?: any) => void;

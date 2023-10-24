@@ -8,7 +8,7 @@
 import { Event } from "@microsoft/microsoft-graph-types";
 import { assert } from "chai";
 
-import { GraphRequestOptions, PageIterator, PageIteratorCallback } from "../../../src/tasks/PageIterator";
+import { DataverseRequestOptions, PageIterator, PageIteratorCallback } from "../../../src/tasks/PageIterator";
 import { getClient } from "../test-helper";
 const client = getClient();
 describe("PageIterator", () => {
@@ -53,7 +53,7 @@ describe("PageIterator", () => {
 			assert.equal(event.start.timeZone, pst);
 			return true;
 		};
-		const requestOptions: GraphRequestOptions = { options: { headers: pstHeader } };
+		const requestOptions: DataverseRequestOptions = { options: { headers: pstHeader } };
 		if (response["@odata.nextLink"]) {
 			const pageIterator = new PageIterator(client, response, callback, requestOptions);
 			await pageIterator.iterate();

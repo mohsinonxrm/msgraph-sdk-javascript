@@ -7,7 +7,7 @@
 
 import { TokenCredential } from "@azure/identity";
 
-import { GraphClientError } from "../../GraphClientError";
+import { DataverseClientError } from "../../DataverseClientError";
 import { AuthenticationProvider } from "../../IAuthenticationProvider";
 import { TokenCredentialAuthenticationProviderOptions } from "./ITokenCredentialAuthenticationProviderOptions";
 
@@ -45,10 +45,10 @@ export class TokenCredentialAuthenticationProvider implements AuthenticationProv
 	 */
 	public constructor(tokenCredential: TokenCredential, authenticationProviderOptions: TokenCredentialAuthenticationProviderOptions) {
 		if (!tokenCredential) {
-			throw new GraphClientError("Please pass a token credential object to the TokenCredentialAuthenticationProvider class constructor");
+			throw new DataverseClientError("Please pass a token credential object to the TokenCredentialAuthenticationProvider class constructor");
 		}
 		if (!authenticationProviderOptions) {
-			throw new GraphClientError("Please pass the TokenCredentialAuthenticationProviderOptions with scopes to the TokenCredentialAuthenticationProvider class constructor");
+			throw new DataverseClientError("Please pass the TokenCredentialAuthenticationProviderOptions with scopes to the TokenCredentialAuthenticationProvider class constructor");
 		}
 		this.authenticationProviderOptions = authenticationProviderOptions;
 		this.tokenCredential = tokenCredential;
@@ -63,7 +63,7 @@ export class TokenCredentialAuthenticationProvider implements AuthenticationProv
 	 */
 	public async getAccessToken(): Promise<string> {
 		const scopes = this.authenticationProviderOptions.scopes;
-		const error = new GraphClientError();
+		const error = new DataverseClientError();
 
 		if (!scopes || scopes.length === 0) {
 			error.name = "Empty Scopes";

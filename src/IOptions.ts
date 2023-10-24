@@ -10,7 +10,7 @@ import { FetchOptions } from "./IFetchOptions";
 
 /**
  * @interface
- * Options for initializing the Graph Client
+ * Options for initializing the Dataverse Client
  * @property {AuthProvider} authProvider - The function to get the authentication token
  * @property {string} [baseUrl] - Base url that needs to be appended to every request
  * @property {boolean} [debugLogging] - The boolean to enable/disable debug logging

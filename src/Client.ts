@@ -9,9 +9,9 @@
  * @module Client
  */
 
-import { GRAPH_API_VERSION, GRAPH_BASE_URL } from "./Constants";
+import { DATAVERSE_API_VERSION, DATAVERSE_BASE_URL } from "./Constants";
 import { CustomAuthenticationProvider } from "./CustomAuthenticationProvider";
-import { GraphRequest } from "./GraphRequest";
+import { DataverseRequest } from "./DataverseRequest";
 import { HTTPClient } from "./HTTPClient";
 import { HTTPClientFactory } from "./HTTPClientFactory";
 import { ClientOptions } from "./IClientOptions";
@@ -24,9 +24,9 @@ export class Client {
 	 * A member which stores the Client instance options
 	 */
 	private config: ClientOptions = {
-		baseUrl: GRAPH_BASE_URL,
+		baseUrl: DATAVERSE_BASE_URL,
 		debugLogging: false,
-		defaultVersion: GRAPH_API_VERSION,
+		defaultVersion: DATAVERSE_API_VERSION,
 	};
 
 	/**
@@ -99,9 +99,9 @@ export class Client {
 	 * @public
 	 * Entry point to make requests
 	 * @param {string} path - The path string value
-	 * @returns The graph request instance
+	 * @returns The dataverse request instance
 	 */
-	public api(path: string): GraphRequest {
-		return new GraphRequest(this.httpClient, this.config, path);
+	public api(path: string): DataverseRequest {
+		return new DataverseRequest(this.httpClient, this.config, path);
 	}
 }

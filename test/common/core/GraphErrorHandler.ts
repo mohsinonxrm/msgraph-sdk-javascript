@@ -7,15 +7,15 @@
 
 import { assert } from "chai";
 
-import { GraphError } from "../../../src";
-import { GraphErrorHandler } from "../../../src/GraphErrorHandler";
+import { DataverseError } from "../../../src";
+import { DataverseErrorHandler } from "../../../src/DataverseErrorHandler";
 
-describe("GraphErrorHandler.ts", () => {
+describe("DataverseErrorHandler.ts", () => {
 	describe("constructError", () => {
 		it("Should return custom error without code", () => {
 			const message = "test";
 			const error = new Error(message);
-			const gError = GraphErrorHandler["constructError"](error);
+			const gError = DataverseErrorHandler["constructError"](error);
 			assert.equal(gError.message, message);
 		});
 
@@ -24,7 +24,7 @@ describe("GraphErrorHandler.ts", () => {
 			const name = "test_name";
 			const error = new Error(message);
 			error.name = name;
-			const gError = GraphErrorHandler["constructError"](error);
+			const gError = DataverseErrorHandler["constructError"](error);
 			assert.equal(gError.message, message);
 			assert.equal(gError.code, name);
 		});
@@ -40,8 +40,8 @@ describe("GraphErrorHandler.ts", () => {
 		};
 
 		it("Should construct error for error response without innerError property", () => {
-			const gError = GraphErrorHandler["constructErrorFromResponse"](error, statusCode);
-			assert.isTrue(gError instanceof GraphError);
+			const gError = DataverseErrorHandler["constructErrorFromResponse"](error, statusCode);
+			assert.isTrue(gError instanceof DataverseError);
 			assert.equal(gError.statusCode, statusCode);
 			assert.equal(gError.requestId, null);
 		});
@@ -50,8 +50,8 @@ describe("GraphErrorHandler.ts", () => {
 			error.error.innerError = {
 				"request-id": "some random id",
 			};
-			const gError = GraphErrorHandler["constructErrorFromResponse"](error, statusCode);
-			assert.isTrue(gError instanceof GraphError);
+			const gError = DataverseErrorHandler["constructErrorFromResponse"](error, statusCode);
+			assert.isTrue(gError instanceof DataverseError);
 			assert.equal(gError.statusCode, statusCode);
 			assert.equal(gError.requestId, "some random id");
 		});
@@ -63,8 +63,8 @@ describe("GraphErrorHandler.ts", () => {
 				"request-id": requestId,
 				date,
 			};
-			const gError = GraphErrorHandler["constructErrorFromResponse"](error, statusCode);
-			assert.isTrue(gError instanceof GraphError);
+			const gError = DataverseErrorHandler["constructErrorFromResponse"](error, statusCode);
+			assert.isTrue(gError instanceof DataverseError);
 			assert.equal(gError.statusCode, statusCode);
 			assert.equal(gError.requestId, "some random id");
 			assert.equal(gError.date.toUTCString(), date.toUTCString());
@@ -82,8 +82,8 @@ describe("GraphErrorHandler.ts", () => {
 					},
 				},
 			};
-			const gError = await GraphErrorHandler.getError(errorResponse);
-			assert.isTrue(gError instanceof GraphError);
+			const gError = await DataverseErrorHandler.getError(errorResponse);
+			assert.isTrue(gError instanceof DataverseError);
 			assert.equal(gError.requestId, "some random id");
 			assert.equal(gError.code, "500");
 			assert.equal(gError.message, "Internal Server Error");
@@ -92,16 +92,16 @@ describe("GraphErrorHandler.ts", () => {
 		it("Should construct error from error object", async () => {
 			const error = new Error("Some Error");
 			error.name = "InvalidError";
-			const gError = await GraphErrorHandler.getError(error);
-			assert.isTrue(gError instanceof GraphError);
+			const gError = await DataverseErrorHandler.getError(error);
+			assert.isTrue(gError instanceof DataverseError);
 			assert.equal(gError.requestId, null);
 			assert.equal(gError.message, "Some Error");
 			assert.equal(gError.code, "InvalidError");
 		});
 
 		it("Should construct some default error", async () => {
-			const gError = await GraphErrorHandler.getError();
-			assert.isTrue(gError instanceof GraphError);
+			const gError = await DataverseErrorHandler.getError();
+			assert.isTrue(gError instanceof DataverseError);
 			assert.equal(gError.message, "");
 			assert.equal(gError.statusCode, -1);
 			assert.equal(gError.code, null);
@@ -123,7 +123,7 @@ describe("GraphErrorHandler.ts", () => {
 			const rawResponse = new Response(undefined, {
 				headers: new Headers(headers),
 			});
-			const gError = await GraphErrorHandler.getError(errorResponse, 500, undefined, rawResponse);
+			const gError = await DataverseErrorHandler.getError(errorResponse, 500, undefined, rawResponse);
 			assert.isDefined(gError.headers);
 			assert.equal(gError.headers?.get("keyTest"), headers.keyTest);
 		});

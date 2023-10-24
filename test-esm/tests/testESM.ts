@@ -1,6 +1,6 @@
 import "isomorphic-fetch";
 
-import { ChaosHandler, ChaosHandlerOptions, ChaosStrategy, Client, ClientOptions } from "@microsoft/microsoft-graph-client";
+import { ChaosHandler, ChaosHandlerOptions, ChaosStrategy, Client, ClientOptions } from "@mohsinonxrm/microsoft-dataverse-client";
 import { assert } from "chai";
 
 const middleware = new ChaosHandler();

@@ -7,7 +7,7 @@
 
 import { assert } from "chai";
 
-import { GRAPH_BASE_URL } from "../../../src/Constants";
+import { DATAVERSE_BASE_URL } from "../../../src/Constants";
 import { Context } from "../../../src/IContext";
 import { MiddlewareControl } from "../../../src/middleware/MiddlewareControl";
 import { FeatureUsageFlag, TelemetryHandlerOptions } from "../../../src/middleware/options/TelemetryHandlerOptions";
@@ -30,7 +30,7 @@ describe("TelemetryHandler.ts", () => {
 		});
 		it("Should not disturb client-request-id in the header", async () => {
 			const context: Context = {
-				request: GRAPH_BASE_URL,
+				request: DATAVERSE_BASE_URL,
 				options: {
 					headers: {
 						"client-request-id": uuid,
@@ -44,7 +44,7 @@ describe("TelemetryHandler.ts", () => {
 
 		it("Should create client-request-id if one is not present in the request header", async () => {
 			const context: Context = {
-				request: "https://GRAPH.microsoft.com:443/",
+				request: "https://graph.microsoft.com:443/",
 				options: {
 					headers: {
 						method: "GET",
@@ -58,7 +58,7 @@ describe("TelemetryHandler.ts", () => {
 
 		it("Should set sdk version header without feature flag usage if telemetry options is not present", async () => {
 			const context: Context = {
-				request: GRAPH_BASE_URL,
+				request: DATAVERSE_BASE_URL,
 				options: {
 					headers: {
 						method: "GET",
@@ -67,14 +67,14 @@ describe("TelemetryHandler.ts", () => {
 			};
 			dummyHTTPHandler.setResponses([okayResponse]);
 			await telemetryHandler.execute(context);
-			assert.equal(context.options.headers["SdkVersion"], `graph-js/${PACKAGE_VERSION}`);
+			assert.equal(context.options.headers["SdkVersion"], `dataverse-js/${PACKAGE_VERSION}`);
 		});
 
 		it("Should set sdk version header with feature flag", async () => {
 			const telemetryOptions = new TelemetryHandlerOptions();
 			telemetryOptions["setFeatureUsage"](FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED);
 			const context: Context = {
-				request: GRAPH_BASE_URL,
+				request: DATAVERSE_BASE_URL,
 				options: {
 					headers: {
 						method: "GET",
@@ -84,10 +84,10 @@ describe("TelemetryHandler.ts", () => {
 			};
 			dummyHTTPHandler.setResponses([okayResponse]);
 			await telemetryHandler.execute(context);
-			assert.equal(context.options.headers["SdkVersion"], `graph-js/${PACKAGE_VERSION} (featureUsage=${FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED.toString(16)})`);
+			assert.equal(context.options.headers["SdkVersion"], `dataverse-js/${PACKAGE_VERSION} (featureUsage=${FeatureUsageFlag.AUTHENTICATION_HANDLER_ENABLED.toString(16)})`);
 		});
 
-		it("Should not set telemetry for non-graph url", async () => {
+		it("Should not set telemetry for non-dataverse url", async () => {
 			const context: Context = {
 				request: "test url",
 				options: {
@@ -104,8 +104,8 @@ describe("TelemetryHandler.ts", () => {
 			assert.equal(context.options.headers["setFeatureUsage"], undefined);
 		});
 
-		it("Should not disturb client-request-id in the header when Request object is passed with Graph URL", async () => {
-			const request = new Request(GRAPH_BASE_URL);
+		it("Should not disturb client-request-id in the header when Request object is passed with Dataverse URL", async () => {
+			const request = new Request(DATAVERSE_BASE_URL);
 			const context: Context = {
 				request,
 				options: {
@@ -121,7 +121,7 @@ describe("TelemetryHandler.ts", () => {
 			assert.equal(context.options.headers["SdkVersion"], sdkVersion);
 		});
 
-		it("Should delete Telemetry in the header when Request object is passed with non Graph URL", async () => {
+		it("Should delete Telemetry in the header when Request object is passed with non Dataverse URL", async () => {
 			const request = new Request(DUMMY_BASE_URL + "/test_url");
 			const context: Context = {
 				request,

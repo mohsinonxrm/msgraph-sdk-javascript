@@ -6,19 +6,19 @@
  */
 
 /**
- * @module GraphErrorHandler
+ * @module DataverseErrorHandler
  */
 
-import { GraphError } from "./GraphError";
-import { GraphRequestCallback } from "./IGraphRequestCallback";
+import { DataverseError } from "./DataverseError";
+import { DataverseRequestCallback } from "./IDataverseRequestCallback";
 
 /**
  * @interface
- * Signature for the json represent of the error response from the Graph API
+ * Signature for the json represent of the error response from the Dataverse API
  * https://docs.microsoft.com/en-us/graph/errors
  * @property {[key: string] : string | number} - The Key value pair
  */
-interface GraphAPIErrorResponse {
+interface DataverseAPIErrorResponse {
 	error: {
 		code: string;
 		message: string;
@@ -28,20 +28,20 @@ interface GraphAPIErrorResponse {
 
 /**
  * @class
- * Class for GraphErrorHandler
+ * Class for DataverseErrorHandler
  */
 
-export class GraphErrorHandler {
+export class DataverseErrorHandler {
 	/**
 	 * @private
 	 * @static
-	 * Populates the GraphError instance with Error instance values
-	 * @param {Error} error - The error returned by graph service or some native error
+	 * Populates the DataverseError instance with Error instance values
+	 * @param {Error} error - The error returned by dataverse service or some native error
 	 * @param {number} [statusCode] - The status code of the response
-	 * @returns The GraphError instance
+	 * @returns The DataverseError instance
 	 */
-	private static constructError(error: Error, statusCode?: number, rawResponse?: Response): GraphError {
-		const gError = new GraphError(statusCode, "", error);
+	private static constructError(error: Error, statusCode?: number, rawResponse?: Response): DataverseError {
+		const gError = new DataverseError(statusCode, "", error);
 		if (error.name !== undefined) {
 			gError.code = error.name;
 		}
@@ -55,10 +55,10 @@ export class GraphErrorHandler {
 	 * @private
 	 * @static
 	 * @async
-	 * Populates the GraphError instance from the Error returned by graph service
-	 * @param {GraphAPIErrorResponse} graphError - The error possibly returned by graph service or some native error
+	 * Populates the DataverseError instance from the Error returned by dataverse service
+	 * @param {DataverseAPIErrorResponse} dataverseError - The error possibly returned by dataverse service or some native error
 	 * @param {number} statusCode - The status code of the response
-	 * @returns A promise that resolves to GraphError instance
+	 * @returns A promise that resolves to DataverseError instance
 	 *
 	 * Example error for https://graph.microsoft.com/v1.0/me/events?$top=3&$search=foo
 	 * {
@@ -72,9 +72,9 @@ export class GraphErrorHandler {
 	 *      }
 	 *  }
 	 */
-	private static constructErrorFromResponse(graphError: GraphAPIErrorResponse, statusCode: number, rawResponse?: Response): GraphError {
-		const error = graphError.error;
-		const gError = new GraphError(statusCode, error.message);
+	private static constructErrorFromResponse(dataverseError: DataverseAPIErrorResponse, statusCode: number, rawResponse?: Response): DataverseError {
+		const error = dataverseError.error;
+		const gError = new DataverseError(statusCode, error.message);
 		gError.code = error.code;
 		if (error.innerError !== undefined) {
 			gError.requestId = error.innerError["request-id"];
@@ -91,22 +91,22 @@ export class GraphErrorHandler {
 	 * @public
 	 * @static
 	 * @async
-	 * To get the GraphError object
+	 * To get the DataverseError object
 	 * Reference - https://docs.microsoft.com/en-us/graph/errors
-	 * @param {any} [error = null] - The error returned by graph service or some native error
+	 * @param {any} [error = null] - The error returned by dataverse service or some native error
 	 * @param {number} [statusCode = -1] - The status code of the response
-	 * @param {GraphRequestCallback} [callback] - The graph request callback function
-	 * @returns A promise that resolves to GraphError instance
+	 * @param {DataverseRequestCallback} [callback] - The dataverse request callback function
+	 * @returns A promise that resolves to DataverseError instance
 	 */
-	public static async getError(error: any = null, statusCode = -1, callback?: GraphRequestCallback, rawResponse?: Response): Promise<GraphError> {
-		let gError: GraphError;
+	public static async getError(error: any = null, statusCode = -1, callback?: DataverseRequestCallback, rawResponse?: Response): Promise<DataverseError> {
+		let gError: DataverseError;
 		if (error && error.error) {
-			gError = GraphErrorHandler.constructErrorFromResponse(error, statusCode, rawResponse);
+			gError = DataverseErrorHandler.constructErrorFromResponse(error, statusCode, rawResponse);
 		} else if (error instanceof Error) {
-			gError = GraphErrorHandler.constructError(error, statusCode, rawResponse);
+			gError = DataverseErrorHandler.constructError(error, statusCode, rawResponse);
 		} else {
-			gError = new GraphError(statusCode);
-			gError.body = error; // if a custom error is passed which is not instance of Error object or a graph API response
+			gError = new DataverseError(statusCode);
+			gError.body = error; // if a custom error is passed which is not instance of Error object or a dataverse API response
 		}
 		if (typeof callback === "function") {
 			callback(gError, null);

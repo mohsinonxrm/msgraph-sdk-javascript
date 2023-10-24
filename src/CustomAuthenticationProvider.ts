@@ -9,7 +9,7 @@
  * @module CustomAuthenticationProvider
  */
 
-import { GraphClientError } from "./GraphClientError";
+import { DataverseClientError } from "./DataverseClientError";
 import { AuthenticationProvider } from "./IAuthenticationProvider";
 import { AuthProvider } from "./IAuthProvider";
 
@@ -52,9 +52,9 @@ export class CustomAuthenticationProvider implements AuthenticationProvider {
 						const invalidTokenMessage = "Access token is undefined or empty.\
 						Please provide a valid token.\
 						For more help - https://github.com/microsoftgraph/msgraph-sdk-javascript/blob/dev/docs/CustomAuthenticationProvider.md";
-						error = new GraphClientError(invalidTokenMessage);
+						error = new DataverseClientError(invalidTokenMessage);
 					}
-					const err = await GraphClientError.setGraphClientError(error);
+					const err = await DataverseClientError.setDataverseClientError(error);
 					reject(err);
 				}
 			});

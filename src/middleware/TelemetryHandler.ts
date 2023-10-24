@@ -8,7 +8,7 @@
 /**
  * @module TelemetryHandler
  */
-import { isCustomHost, isGraphURL } from "../GraphRequestUtil";
+import { isCustomHost, isDataverseURL } from "../DataverseRequestUtil";
 import { Context } from "../IContext";
 import { PACKAGE_VERSION } from "../Version";
 import { Middleware } from "./IMiddleware";
@@ -41,7 +41,7 @@ export class TelemetryHandler implements Middleware {
 	 * @static
 	 * A member holding the language prefix for the sdk version header value
 	 */
-	private static PRODUCT_NAME = "graph-js";
+	private static PRODUCT_NAME = "dataverse-js";
 
 	/**
 	 * @private
@@ -65,9 +65,9 @@ export class TelemetryHandler implements Middleware {
 	 */
 	public async execute(context: Context): Promise<void> {
 		const url = typeof context.request === "string" ? context.request : context.request.url;
-		if (isGraphURL(url) || (context.customHosts && isCustomHost(url, context.customHosts))) {
-			// Add telemetry only if the request url is a Graph URL.
-			// Errors are reported as in issue #265 if headers are present when redirecting to a non Graph URL
+		if (isDataverseURL(url) || (context.customHosts && isCustomHost(url, context.customHosts))) {
+			// Add telemetry only if the request url is a Dataverse URL.
+			// Errors are reported as in issue #265 if headers are present when redirecting to a non Dataverse URL
 			let clientRequestId: string = getRequestHeader(context.request, context.options, TelemetryHandler.CLIENT_REQUEST_ID_HEADER);
 			if (!clientRequestId) {
 				clientRequestId = generateUUID();

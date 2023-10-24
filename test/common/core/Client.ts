@@ -12,7 +12,7 @@ import * as sinon from "sinon";
 
 import { CustomAuthenticationProvider, TelemetryHandler } from "../../../src";
 import { Client } from "../../../src/Client";
-import { GraphClientError } from "../../../src/GraphClientError";
+import { DataverseClientError } from "../../../src/DataverseClientError";
 import { AuthProvider } from "../../../src/IAuthProvider";
 import { ClientOptions } from "../../../src/IClientOptions";
 import { Options } from "../../../src/IOptions";
@@ -122,7 +122,7 @@ describe("Client.ts", () => {
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const res = await client.api("/test").get();
 			} catch (error) {
-				assert.isTrue(error instanceof GraphClientError);
+				assert.isTrue(error instanceof DataverseClientError);
 				assert.isDefined(error.message);
 			}
 		});
@@ -145,7 +145,7 @@ describe("Client.ts", () => {
 				const res = await client.api("/test").get();
 				throw new Error("Test failed - Expected error was not thrown");
 			} catch (error) {
-				assert.isTrue(error instanceof GraphClientError);
+				assert.isTrue(error instanceof DataverseClientError);
 				assert.equal(error.customError, customError);
 			}
 		});

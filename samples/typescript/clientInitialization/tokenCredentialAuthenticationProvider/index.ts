@@ -9,8 +9,8 @@
 import "isomorphic-fetch";
 
 import { ClientSecretCredential } from "@azure/identity";
-import { Client } from "@microsoft/microsoft-graph-client";
-import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
+import { Client } from "@mohsinonxrm/microsoft-dataverse-client";
+import { TokenCredentialAuthenticationProvider } from "@mohsinonxrm/microsoft-dataverse-client/authProviders/azureTokenCredentials";
 
 const port = "<PORT_NUMBER>";
 const tenantId = "<TENANT_ID>";

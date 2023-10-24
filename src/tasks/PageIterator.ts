@@ -29,12 +29,12 @@ export interface PageCollection {
 
 /**
  * Signature to define the request options to be sent during request.
- * The values of the GraphRequestOptions properties are passed to the Graph Request object.
+ * The values of the DataverseRequestOptions properties are passed to the Dataverse Request object.
  * @property {HeadersInit} headers - the header options for the request
  * @property {MiddlewareOptions[]} middlewareoptions - The middleware options for the request
  * @property {FetchOptions} options - The fetch options for the request
  */
-export interface GraphRequestOptions {
+export interface DataverseRequestOptions {
 	headers?: HeadersInit;
 	middlewareOptions?: MiddlewareOptions[];
 	options?: FetchOptions;
@@ -53,7 +53,7 @@ export type PageIteratorCallback = (data: any) => boolean;
 export class PageIterator {
 	/**
 	 * @private
-	 * Member holding the GraphClient instance
+	 * Member holding the DataverseClient instance
 	 */
 	private client: Client;
 
@@ -92,7 +92,7 @@ export class PageIterator {
 	 * @private
 	 * Information to be added to the request
 	 */
-	private requestOptions: GraphRequestOptions;
+	private requestOptions: DataverseRequestOptions;
 
 	/**
 	 * @private
@@ -107,10 +107,10 @@ export class PageIterator {
 	 * @param {Client} client - The graph client instance
 	 * @param {PageCollection} pageCollection - The page collection object
 	 * @param {PageIteratorCallback} callBack - The callback function
-	 * @param {GraphRequestOptions} requestOptions - The request options
+	 * @param {DataverseRequestOptions} requestOptions - The request options
 	 * @returns An instance of a PageIterator
 	 */
-	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback, requestOptions?: GraphRequestOptions) {
+	public constructor(client: Client, pageCollection: PageCollection, callback: PageIteratorCallback, requestOptions?: DataverseRequestOptions) {
 		this.client = client;
 		this.collection = pageCollection.value;
 		this.nextLink = pageCollection["@odata.nextLink"];

@@ -8,7 +8,7 @@
 import { assert } from "chai";
 
 import { ChaosHandler, ChaosHandlerOptions, ChaosStrategy } from "../../../src";
-import { GRAPH_BASE_URL } from "../../../src/Constants";
+import { DATAVERSE_BASE_URL } from "../../../src/Constants";
 import { Context } from "../../../src/IContext";
 import { AuthenticationHandler } from "../../../src/middleware/AuthenticationHandler";
 import { DummyAuthenticationProvider } from "../../DummyAuthenticationProvider";
@@ -26,7 +26,7 @@ describe("AuthenticationHandler.ts", async () => {
 		});
 	});
 	describe("Auth Headers", () => {
-		it("Should delete Auth header when Request object is passed with non Graph URL", async () => {
+		it("Should delete Auth header when Request object is passed with non Dataverse URL", async () => {
 			const request = new Request(DUMMY_BASE_URL + "/test_url");
 			const context: Context = {
 				request,
@@ -56,8 +56,8 @@ describe("AuthenticationHandler.ts", async () => {
 			assert.equal((request as Request).headers.get("Authorization"), accessToken);
 		});
 
-		it("Should contain Auth header when Request object is passed with a valid Graph URL", async () => {
-			const request = new Request(GRAPH_BASE_URL);
+		it("Should contain Auth header when Request object is passed with a valid Dataverse URL", async () => {
+			const request = new Request(DATAVERSE_BASE_URL);
 			const context: Context = {
 				request,
 				customHosts: new Set<string>(["custom"]),

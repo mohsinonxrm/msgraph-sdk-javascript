@@ -5,8 +5,8 @@
  * -------------------------------------------------------------------------------------------
  */
 
-const { Client } = require("@microsoft/microsoft-graph-client");
-const { TokenCredentialAuthenticationProvider } = require("@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials");
+const { Client } = require("@mohsinonxrm/microsoft-dataverse-client");
+const { TokenCredentialAuthenticationProvider } = require("@mohsinonxrm/microsoft-dataverse-client/authProviders/azureTokenCredentials");
 const { ClientSecretCredential } = require("@azure/identity");
 const { clientId, clientSecret, scopes, tenantId } = require("./secrets");
 

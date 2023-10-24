@@ -21,9 +21,9 @@ const config = [
 	{
 		input: ["lib/es/src/browser/index.js"],
 		output: {
-			file: "lib/graph-js-sdk.js",
+			file: "lib/dataverse-js-sdk.js",
 			format: "iife",
-			name: "MicrosoftGraph",
+			name: "MicrosoftDataverse",
 		},
 		plugins: [
 			resolve({
@@ -46,9 +46,9 @@ const config = [
 	{
 		input: ["authProviders/es/azureTokenCredentials/index.js"],
 		output: {
-			file: "lib/graph-client-tokenCredentialAuthProvider.js",
+			file: "lib/dataverse-client-tokenCredentialAuthProvider.js",
 			format: "iife",
-			name: "MicrosoftGraphTokenCredentialAuthProvider",
+			name: "MicrosoftDataverseTokenCredentialAuthProvider",
 		},
 		plugins: [
 			resolve({
@@ -72,9 +72,9 @@ const config = [
 		input: ["lib/es/src/authentication/msal-browser/AuthCodeMSALBrowserAuthenticationProvider.js"],
 		external: ["@azure/msal-browser"],
 		output: {
-			file: "lib/graph-client-msalBrowserAuthProvider.js",
+			file: "lib/dataverse-client-msalBrowserAuthProvider.js",
 			format: "iife",
-			name: "MSGraphAuthCodeMSALBrowserAuthProvider",
+			name: "MSDataverseAuthCodeMSALBrowserAuthProvider",
 			globals: {
 				"@azure/msal-browser": "msal",
 			},

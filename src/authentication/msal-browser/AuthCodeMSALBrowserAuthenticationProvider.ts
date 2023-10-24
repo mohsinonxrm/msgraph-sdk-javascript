@@ -11,7 +11,7 @@
 
 import { AuthenticationResult, InteractionRequiredAuthError, InteractionType, PublicClientApplication } from "@azure/msal-browser";
 
-import { GraphClientError } from "../../GraphClientError";
+import { DataverseClientError } from "../../DataverseClientError";
 import { AuthenticationProvider } from "../../IAuthenticationProvider";
 import { AuthCodeMSALBrowserAuthenticationProviderOptions } from "../msalOptions/MSALAuthenticationProviderOptions";
 
@@ -32,7 +32,7 @@ export class AuthCodeMSALBrowserAuthenticationProvider implements Authentication
 	 */
 	public constructor(private publicClientApplication: PublicClientApplication, private options: AuthCodeMSALBrowserAuthenticationProviderOptions) {
 		if (!options || !publicClientApplication) {
-			throw new GraphClientError("Please pass valid PublicClientApplication instance and AuthCodeMSALBrowserAuthenticationProviderOptions instance to instantiate MSALBrowserAuthenticationProvider");
+			throw new DataverseClientError("Please pass valid PublicClientApplication instance and AuthCodeMSALBrowserAuthenticationProviderOptions instance to instantiate MSALBrowserAuthenticationProvider");
 		}
 	}
 
@@ -45,7 +45,7 @@ export class AuthCodeMSALBrowserAuthenticationProvider implements Authentication
 	public async getAccessToken(): Promise<string> {
 		const scopes = this.options && this.options.scopes;
 		const account = this.options && this.options.account;
-		const error = new GraphClientError();
+		const error = new DataverseClientError();
 		if (!scopes || scopes.length === 0) {
 			error.name = "Empty Scopes";
 			error.message = "Scopes cannot be empty, Please provide scopes";

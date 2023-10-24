@@ -9,7 +9,7 @@
  * @module AuthenticationHandler
  */
 
-import { isCustomHost, isGraphURL } from "../GraphRequestUtil";
+import { isCustomHost, isDataverseURL } from "../DataverseRequestUtil";
 import { AuthenticationProvider } from "../IAuthenticationProvider";
 import { AuthenticationProviderOptions } from "../IAuthenticationProviderOptions";
 import { Context } from "../IContext";
@@ -62,7 +62,7 @@ export class AuthenticationHandler implements Middleware {
 	 */
 	public async execute(context: Context): Promise<void> {
 		const url = typeof context.request === "string" ? context.request : context.request.url;
-		if (isGraphURL(url) || (context.customHosts && isCustomHost(url, context.customHosts))) {
+		if (isDataverseURL(url) || (context.customHosts && isCustomHost(url, context.customHosts))) {
 			let options: AuthenticationHandlerOptions;
 			if (context.middlewareControl instanceof MiddlewareControl) {
 				options = context.middlewareControl.getMiddlewareOptions(AuthenticationHandlerOptions) as AuthenticationHandlerOptions;

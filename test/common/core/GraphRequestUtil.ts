@@ -7,9 +7,9 @@
 
 import { assert } from "chai";
 
-import { serializeContent, urlJoin } from "../../../src/GraphRequestUtil";
+import { serializeContent, urlJoin } from "../../../src/DataverseRequestUtil";
 
-describe("GraphRequestUtil.ts", () => {
+describe("DataverseRequestUtil.ts", () => {
 	describe("urlJoin", () => {
 		const output = "host/version/path";
 

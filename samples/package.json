@@ -11,7 +11,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@azure/identity": "^3.1.2",
-		"@microsoft/microsoft-graph-client": "file:../",
+		"@mohsinonxrm/microsoft-dataverse-client": "file:../",
 		"isomorphic-fetch": "^3.0.0",
 		"ts-node": "^9.1.1",
 		"typescript": "^4.2.4"
