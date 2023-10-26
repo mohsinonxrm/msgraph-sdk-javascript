@@ -10,7 +10,7 @@ import { Client } from "@mohsinonxrm/microsoft-dataverse-client";
 const error = "error throw by the authentication handler";
 
 export const client = Client.init({
-	defaultVersion: "v1.0",
+	defaultVersion: "v9.1",
 	debugLogging: true,
 	authProvider: (done) => {
 		done(error, "ACCESS_TOKEN");

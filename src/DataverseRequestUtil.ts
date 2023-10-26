@@ -81,6 +81,22 @@ export const isCustomHost = (url: string, customHosts: Set<string>): boolean => 
 };
 
 /**
+ * Determines whether a given hostname is allowed based on a set of allowed hosts.
+ * @param {string} hostName - The hostname to check.
+ * @param {Set<string>} allowedHosts - The set of allowed hosts.
+ * @returns {boolean} True if the hostname is allowed, false otherwise.
+ */
+const isHostNameAllowed = (hostName: string, allowedHosts: Set<string>): boolean => {
+	allowedHosts.forEach((allowedHost: string) => {
+		if (hostName.endsWith(allowedHost)) {
+			return true;
+		}
+	});
+
+	return false;
+}
+
+/**
  * Checks if the url is for one of the provided hosts.
  * @param {string} url - The url to be verified
  * @param {Set<string>} allowedHosts - A set of hosts.
@@ -98,14 +114,20 @@ const isValidEndpoint = (url: string, allowedHosts: Set<string> = DATAVERSE_URLS
 		const startofPortNoPos = url.indexOf(":");
 		const endOfHostStrPos = url.indexOf("/");
 		let hostName = "";
+        let hostNameAllowed = false;
 		if (endOfHostStrPos !== -1) {
 			if (startofPortNoPos !== -1 && startofPortNoPos < endOfHostStrPos) {
 				hostName = url.substring(0, startofPortNoPos);
-				return allowedHosts.has(hostName);
+                hostNameAllowed = isHostNameAllowed(hostName, allowedHosts);
+
+                return hostNameAllowed;
 			}
+
 			// Parse out the host
 			hostName = url.substring(0, endOfHostStrPos);
-			return allowedHosts.has(hostName);
+            hostNameAllowed = isHostNameAllowed(hostName, allowedHosts);
+
+            return hostNameAllowed;
 		}
 	}
 
