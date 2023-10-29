@@ -87,14 +87,9 @@ export const isCustomHost = (url: string, customHosts: Set<string>): boolean => 
  * @returns {boolean} True if the hostname is allowed, false otherwise.
  */
 const isHostNameAllowed = (hostName: string, allowedHosts: Set<string>): boolean => {
-	allowedHosts.forEach((allowedHost: string) => {
-		if (hostName.endsWith(allowedHost)) {
-			return true;
-		}
-	});
-
-	return false;
-}
+	const allowedHostsArray = Array.from(allowedHosts);
+	return allowedHostsArray.some((allowedHost) => hostName.endsWith(allowedHost));
+};
 
 /**
  * Checks if the url is for one of the provided hosts.
